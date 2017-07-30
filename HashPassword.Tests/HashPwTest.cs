@@ -28,5 +28,18 @@ namespace HashPassword.Tests
 
             Assert.Equal(hashPassword, secondHashPassword);
         }
+        [Fact]
+        public void Hash_password_will_be_diffrent_for_the_same_user_password_with_diffrent_salt()
+        {
+            const string password = "secretpw";
+            var hashSystem = new HashPw();
+
+            var salt = hashSystem.GetSalt();
+            var hashPassword = hashSystem.GetHash(password, salt);
+            var saltForSecond = hashSystem.GetSalt();
+            var secondHashPassword = hashSystem.GetHash(password, saltForSecond);
+
+            Assert.NotEqual(hashPassword, secondHashPassword);
+        }
     }
 }
